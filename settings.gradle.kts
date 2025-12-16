@@ -17,6 +17,7 @@ pluginManagement {
 
 dependencyResolutionManagement {
     repositories {
+        mavenLocal()
         google {
             mavenContent {
                 includeGroupAndSubgroups("androidx")
@@ -29,4 +30,4 @@ dependencyResolutionManagement {
 }
 
 include(":composeApp")
-include(":sharedFeature")
+include(":sharedfeature")

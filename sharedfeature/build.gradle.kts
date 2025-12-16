@@ -1,47 +1,49 @@
+import com.android.build.api.dsl.androidLibrary
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
-//    alias(libs.plugins.androidKotlinMultiplatformLibrary)
-//    alias(libs.plugins.androidLint)
+    alias(libs.plugins.androidKotlinMultiplatformLibrary)
+    alias(libs.plugins.androidLint)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.kotlinxSerialization)
 //    alias(libs.plugins.kotlinCocoapods)
 
-    id("com.android.library")
+//    id("com.android.library")
     id("maven-publish")
-    id("signing")
+//    id("signing")
 }
 
 group = "com.cunningham.kmp"
-version = "1.0.0"
+version = "1.0.1"
 
 kotlin {
 
-    androidTarget {
-        publishLibraryVariants("release", "debug")
-
-        @OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
-        compilerOptions {
-            // Set the JVM target to 11 for Android
-            jvmTarget.set(JvmTarget.JVM_11)
-        }
-    }
-
-    // Target declarations - add or remove as needed below. These define
-    // which platforms this KMP module supports.
-    // See: https://kotlinlang.org/docs/multiplatform-discover-project.html#targets
-//    androidLibrary {
-//        namespace = "com.cunningham.sharedfeature"
-//        compileSdk = 36
-//        minSdk = 26
+//    androidTarget {
+//        publishLibraryVariants("release", "debug")
 //
+//        @OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
 //        compilerOptions {
 //            // Set the JVM target to 11 for Android
 //            jvmTarget.set(JvmTarget.JVM_11)
 //        }
 //    }
+
+    // Target declarations - add or remove as needed below. These define
+    // which platforms this KMP module supports.
+    // See: https://kotlinlang.org/docs/multiplatform-discover-project.html#targets
+    @Suppress("UnstableApiUsage")
+    androidLibrary {
+        namespace = "com.cunningham.sharedfeature"
+        compileSdk = 36
+        minSdk = 26
+
+        compilerOptions {
+            // Set the JVM target to 11 for Android
+            jvmTarget.set(JvmTarget.JVM_11)
+        }
+    }
 
     // For iOS targets, this is also where you should
     // configure native binary output. For more information, see:
@@ -112,28 +114,16 @@ kotlin {
     }
 }
 
-android {
-    namespace = "com.cunningham.sharedfeature"
-    compileSdk = 36
-
-    defaultConfig {
-        minSdk = 26
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-}
-
 publishing {
     repositories {
         maven {
             name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/CTS-Futures/kmp-demo")
+            url = uri("https://maven.pkg.github.com/morale3232/multiplatform-demo")
             credentials {
                 username = System.getenv("GITHUB_ACTOR")
                 password = System.getenv("GITHUB_TOKEN")
+                print("GITHUB_ACTOR: ${System.getenv("GITHUB_ACTOR")} - ${this.username}\n")
+                print("GITHUB_TOKEN: ${System.getenv("GITHUB_TOKEN")?.takeLast(15)} - ${this.password?.takeLast(15)}...\n")
             }
         }
 
