@@ -7,7 +7,12 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.kotlinxSerialization)
+    id("maven-publish")
+    id("signing")
 }
+
+group = "kmp.demo.app"
+version = "1.0.0"
 
 kotlin {
     androidTarget {
@@ -15,6 +20,12 @@ kotlin {
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_11)
         }
+//        publishLibraryVariants("release")
+//        cocoapods {
+//            framework {
+//                baseName = "ComposeApp"
+//            }
+//        }
     }
 
     listOf(
@@ -38,6 +49,7 @@ kotlin {
             implementation(libs.ktor.client.darwin)
         }
         commonMain.dependencies {
+            implementation(project(":sharedFeature"))
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
@@ -59,16 +71,28 @@ kotlin {
             implementation(libs.koin.compose.viewmodel)
         }
     }
+
+//    cocoapods {
+//        summary = "Shared Feature"
+//        homepage = "https://github.com/yourcompany/shared-feature"
+//        version = "1.0.0"
+//        ios.deploymentTarget = "14.0"
+//
+//        framework {
+//            baseName = "SharedFeature"
+//            isStatic = true
+//        }
+//    }
 }
 
 android {
     namespace = "com.jetbrains.kmpapp"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.jetbrains.kmpapp"
-        minSdk = 24
-        targetSdk = 35
+        minSdk = 26
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
     }
@@ -85,6 +109,41 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+    }
+}
+
+// Maven Publishing Configuration
+publishing {
+    publications {
+        // This is automatically created by the android target
+        // but we can configure it further if needed
+    }
+
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://github.com/orgs/CTS-Futures/packages")
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
+            }
+        }
+
+        // OR for local testing:
+//        maven {
+//            name = "LocalMaven"
+//            url = uri("file://${buildDir}/repo")
+//        }
+
+        // OR for private Maven repo:
+        // maven {
+        //     name = "PrivateMaven"
+        //     url = uri("https://your-maven-repo.com/releases")
+        //     credentials {
+        //         username = System.getenv("MAVEN_USERNAME")
+        //         password = System.getenv("MAVEN_PASSWORD")
+        //     }
+        // }
     }
 }
 
