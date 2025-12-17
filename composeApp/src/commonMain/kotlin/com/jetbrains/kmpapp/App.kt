@@ -1,7 +1,7 @@
 package com.jetbrains.kmpapp
 
 import androidx.compose.runtime.Composable
-import com.cunningham.sharedfeature.SharedFeatureScreen
+import com.sample.shared.SharedFeatureScreen
 import kotlinx.serialization.Serializable
 
 @Serializable

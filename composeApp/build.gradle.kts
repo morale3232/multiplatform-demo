@@ -38,7 +38,7 @@ kotlin {
             implementation(libs.ktor.client.darwin)
         }
         commonMain.dependencies {
-//            implementation(libs.shared.feature)
+            implementation(libs.shared.feature)
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)

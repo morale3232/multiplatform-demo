@@ -17,7 +17,14 @@ pluginManagement {
 
 dependencyResolutionManagement {
     repositories {
-        mavenLocal()
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/morale3232/multiplatform-demo")
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
+            }
+        }
         google {
             mavenContent {
                 includeGroupAndSubgroups("androidx")
@@ -30,4 +37,5 @@ dependencyResolutionManagement {
 }
 
 include(":composeApp")
-include(":sharedfeature")
+//include(":sharedfeature")
+include(":shared")
