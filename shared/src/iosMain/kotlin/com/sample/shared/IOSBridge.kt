@@ -4,7 +4,11 @@ import androidx.compose.ui.window.ComposeUIViewController
 import platform.UIKit.UIViewController
 
 fun createSharedFeatureViewController(): UIViewController {
-    return ComposeUIViewController {
+    return ComposeUIViewController(
+        configure = {
+            enforceStrictPlistSanityCheck = false
+        }
+    ) {
         SharedFeatureScreen()
     }
 }
