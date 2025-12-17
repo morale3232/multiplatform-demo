@@ -38,6 +38,7 @@ kotlin {
             implementation(libs.ktor.client.darwin)
         }
         commonMain.dependencies {
+            implementation(libs.shared.feature)
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
@@ -63,12 +64,12 @@ kotlin {
 
 android {
     namespace = "com.jetbrains.kmpapp"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.jetbrains.kmpapp"
-        minSdk = 24
-        targetSdk = 35
+        minSdk = 26
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
     }
